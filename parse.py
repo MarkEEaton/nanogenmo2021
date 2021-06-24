@@ -1,21 +1,23 @@
 from collections import Counter
 from nltk.corpus import stopwords
+import langdetect
 import nltk
 import string
 
-""" Todo
-check it is in english
-"""
 
 with open("test.txt", "r", encoding="latin-1") as f1:
     sentences = nltk.tokenize.sent_tokenize(f1.read())
     for sentence in sentences:
         sentence = sentence.replace("\n", " ")
+        try:
+            language = langdetect.detect(sentence)
+        except langdetect.lang_detect_exception.LangDetectException:
+            language = "none"
         sentence = sentence.replace('"', '')
         sentence = sentence.replace("(", "")
         sentence = sentence.replace(")", "")
         sentence = sentence.replace("_", "")
-        if sentence.isupper():
+        if sentence.isupper() or (language != 'en'):
             pass
         else:
             words = nltk.tokenize.word_tokenize(sentence)
@@ -28,9 +30,11 @@ with open("test.txt", "r", encoding="latin-1") as f1:
                     if l == letter:
                         c[l] += 1
             try:
-                if c.most_common(1)[0][1]/ len(words) > 0.6:
+                if c.most_common(1)[0][1] / len(words) > 0.6:
                     with open("novel.txt", "a", encoding="latin-1") as f2:
                         print(sentence)
                         f2.write(sentence + " ")
-            except:
+            except IndexError:
                 pass
+            except:
+                raise
