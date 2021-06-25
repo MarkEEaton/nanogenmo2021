@@ -5,32 +5,32 @@ import nltk
 import string
 
 nato = [
-    "Alfa",
-    "Bravo",
-    "Charlie",
-    "Delta",
-    "Echo",
-    "Foxtrot",
-    "Golf",
-    "Hotel",
-    "India",
-    "Juliett",
-    "Kilo",
-    "Lima",
-    "Mike",
-    "November",
-    "Oscar",
-    "Papa",
-    "Quebec",
-    "Romeo",
-    "Sierra",
-    "Tango",
-    "Uniform",
-    "Victor",
-    "Whiskey",
-    "Xray",
-    "Yankee",
-    "Zulu",
+    ("a", "Alfa"),
+    ("b", "Bravo"),
+    ("c", "Charlie"),
+    ("d", "Delta"),
+    ("e", "Echo"),
+    ("f", "Foxtrot"),
+    ("g", "Golf"),
+    ("h", "Hotel"),
+    ("i", "India"),
+    ("j", "Juliett"),
+    ("k", "Kilo"),
+    ("l", "Lima"),
+    ("m", "Mike"),
+    ("n", "November"),
+    ("o", "Oscar"),
+    ("p", "Papa"),
+    ("q", "Quebec"),
+    ("r", "Romeo"),
+    ("s", "Sierra"),
+    ("t", "Tango"),
+    ("u", "Uniform"),
+    ("v", "Victor"),
+    ("w", "Whiskey"),
+    ("x", "Xray"),
+    ("y", "Yankee"),
+    ("z", "Zulu"),
 ]
 
 
@@ -68,13 +68,13 @@ def novel():
                     c[l] += 1
                 try:
                     selected_letter = c.most_common(1)[0][0]
-                    if novel_words > 50:
+                    if novel_words > 5000:
                         print(results)
                         return results
                     if c.most_common(1)[0][1] / len(words) > 0.6:
                         results[selected_letter].append(sentence)
                         novel_words += sentence_words
-                        print(sentence, selected_letter)
+                        print(sentence)
                 except IndexError:
                     pass
                 except:
@@ -83,7 +83,12 @@ def novel():
 
 def assemble(nov):
     with open("novel.txt", "a", encoding="latin-1") as f2:
-        pass
+        for letter in nato:
+            try:
+                f2.write("\n\n" + letter[1].upper() + "\n\n")
+                f2.write(" ".join(nov[letter[0]]))
+            except IndexError:
+                pass
 
 
 if __name__ == "__main__":
