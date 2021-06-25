@@ -72,6 +72,8 @@ def novel():
                 pass
             elif sentence[:7] == "Section":
                 pass
+            elif isnumber(sentence):
+                pass
             else:
                 words = nltk.tokenize.word_tokenize(sentence)
                 words = [word.lower() for word in words if word.isalpha()]
@@ -96,6 +98,13 @@ def novel():
                     pass
                 except:
                     raise
+
+
+def isnumber(sentence):
+    for letter in sentence:
+        if letter.isnumeric():
+            return True 
+    return False
 
 
 def assemble(nov):
