@@ -68,7 +68,7 @@ def novel():
                     c[l] += 1
                 try:
                     selected_letter = c.most_common(1)[0][0]
-                    if novel_words > 5000:
+                    if novel_words > 60000:
                         print(results)
                         return results
                     if c.most_common(1)[0][1] / len(words) > 0.6:
