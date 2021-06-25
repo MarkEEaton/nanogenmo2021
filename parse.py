@@ -2,6 +2,7 @@ from collections import Counter, defaultdict
 from nltk.corpus import stopwords
 import langdetect
 import nltk
+import re
 import string
 
 nato = [
@@ -52,8 +53,24 @@ def novel():
             sentence = sentence.replace("[", "")
             sentence = sentence.replace("]", "")
             sentence = sentence.replace("*", "")
+            sentence = sentence.replace("|", "")
             sentence = " ".join(sentence.split())
+            sentence = re.sub(r"(\.)\1+", "\\1", sentence)
             if sentence.isupper() or (language != "en"):
+                pass
+            elif sentence[-8:] == "Brigade.":
+                pass
+            elif sentence[-3:] == "Cf.":
+                pass
+            elif sentence[-6:] == "Photo.":
+                pass
+            elif sentence[:4] == "Time":
+                pass
+            elif sentence[:11] == "INGREDIENTS":
+                pass
+            elif sentence[:9] == "Copyright":
+                pass
+            elif sentence[:7] == "Section":
                 pass
             else:
                 words = nltk.tokenize.word_tokenize(sentence)
@@ -68,7 +85,7 @@ def novel():
                     c[l] += 1
                 try:
                     selected_letter = c.most_common(1)[0][0]
-                    if novel_words > 60000:
+                    if novel_words > 50000:
                         print(results)
                         return results
                     if c.most_common(1)[0][1] / len(words) > 0.6:
