@@ -42,6 +42,7 @@ def novel():
         sentences = nltk.tokenize.sent_tokenize(f1.read())
         for sentence in sentences:
             sentence = sentence.replace("\n", " ")
+            sentence = sentence.replace("\r", " ")
             try:
                 language = langdetect.detect(sentence)
             except langdetect.lang_detect_exception.LangDetectException:
@@ -103,7 +104,7 @@ def novel():
 def isnumber(sentence):
     for letter in sentence:
         if letter.isnumeric():
-            return True 
+            return True
     return False
 
 
@@ -111,7 +112,11 @@ def assemble(nov):
     with open("novel.txt", "a", encoding="latin-1") as f2:
         for letter in nato:
             try:
-                f2.write("\n\n" + letter[1].upper() + "\n\n")
+                f2.write("\n\n\n" + letter[1].upper() + "\n\n")
+                i = 30
+                while i < len(nov[letter[0]]):
+                    nov[letter[0]].insert(i, "\n     ")
+                    i += 31
                 f2.write(" ".join(nov[letter[0]]))
             except IndexError:
                 pass
