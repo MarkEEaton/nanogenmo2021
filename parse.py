@@ -18,6 +18,10 @@ def novel():
             sentence = sentence.replace("(", "")
             sentence = sentence.replace(")", "")
             sentence = sentence.replace("_", "")
+            sentence = sentence.replace("[", "")
+            sentence = sentence.replace("]", "")
+            sentence = sentence.replace("*", "")
+            sentence = " ".join(sentence.split())
             if sentence.isupper() or (language != 'en'):
                 pass
             else:
@@ -37,7 +41,7 @@ def novel():
                         if c.most_common(1)[0][1] / len(words) > 0.6:
                             with open("novel.txt", "a", encoding="latin-1") as f2:
                                 novel_words += sentence_words
-                                print(sentence, novel_words)
+                                print(sentence)
                                 f2.write(sentence + " ")
                     except IndexError:
                         pass
