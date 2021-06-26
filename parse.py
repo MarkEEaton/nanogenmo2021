@@ -4,6 +4,7 @@ import langdetect
 import nltk
 import re
 import string
+import textwrap
 
 nato = [
     ("a", "Alfa"),
@@ -88,7 +89,7 @@ def novel():
                     c[l] += 1
                 try:
                     selected_letter = c.most_common(1)[0][0]
-                    if novel_words > 50000:
+                    if novel_words > 53000:
                         print(results)
                         return results
                     if c.most_common(1)[0][1] / len(words) > 0.6:
@@ -112,12 +113,18 @@ def assemble(nov):
     with open("novel.txt", "a", encoding="latin-1") as f2:
         for letter in nato:
             try:
-                f2.write("\n\n\n" + letter[1].upper() + "\n\n")
-                i = 30
-                while i < len(nov[letter[0]]):
-                    nov[letter[0]].insert(i, "\n     ")
-                    i += 31
-                f2.write(" ".join(nov[letter[0]]))
+                f2.write("\n\n\n" + letter[1].upper() + "\n")
+                i = 1
+                output = ""
+                for sentence in nov[letter[0]]:
+                    output = output + sentence + " "
+                    if i % 30 == 0:
+                        my_wrap = textwrap.TextWrapper(
+                            width=80, initial_indent="\n     "
+                        )
+                        f2.write(my_wrap.fill(output))
+                        output = ""
+                    i += 1
             except IndexError:
                 pass
 
